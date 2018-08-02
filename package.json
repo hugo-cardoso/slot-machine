@@ -1,0 +1,26 @@
+{
+  "name": "slot-machine",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "./node_modules/.bin/gulp build",
+    "build:watch": "./node_modules/.bin/gulp watch"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "babelify": "^8.0.0",
+    "browserify": "^16.2.2",
+    "gulp": "^3.9.1",
+    "gulp-clean": "^0.4.0",
+    "gulp-sass": "^4.0.1",
+    "vinyl-buffer": "^1.0.1",
+    "vinyl-source-stream": "^2.0.0"
+  },
+  "dependencies": {
+    "buzz": "^1.2.1",
+    "reset-css": "^4.0.1"
+  },
+  "author": "Hugo Cardoso",
+  "license": "ISC"
+}

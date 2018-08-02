@@ -1,0 +1,147 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+   v4.0 | 20180602
+   License: none (public domain)
+*/
+@import url("https://fonts.googleapis.com/css?family=Press+Start+2P");
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+main, menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, main, menu, nav, section {
+  display: block; }
+
+/* HTML5 hidden-attribute fix for newer browsers */
+*[hidden] {
+  display: none; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+.game {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  background-color: #262a43;
+  flex-direction: column; }
+  .game__content {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    max-width: 100%; }
+  .game__message {
+    width: 100%;
+    height: 100px;
+    margin-bottom: 25px;
+    background-color: #feae35;
+    box-sizing: border-box;
+    border: 10px solid #d77643;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fee861;
+    font-size: 35px;
+    font-family: 'Press Start 2P', cursive; }
+  .game__machine {
+    width: 100%;
+    height: 300px;
+    background-color: #e33c44;
+    margin: auto;
+    display: flex;
+    overflow: hidden;
+    padding: 25px 10px;
+    box-sizing: border-box; }
+  .game__numbers {
+    width: 100%;
+    height: 100%;
+    background-color: #9e2834;
+    display: flex;
+    overflow: hidden;
+    margin: auto;
+    justify-content: space-between;
+    padding: 0px 15px; }
+  .game__number {
+    width: 100%;
+    height: 100;
+    background-color: #FFF;
+    border: 1px solid #B0BEC5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to bottom, #ecf0f1 0%, #ecf0f1 55%, #bbcedf 55%, #bbcedf 100%);
+    font-size: 75px;
+    color: rgba(0, 0, 0, 0.75);
+    font-family: 'Press Start 2P', cursive; }
+    .game__number:nth-child(2) {
+      margin: 0px 15px; }
+    @media screen and (max-width: 768px) {
+      .game__number {
+        font-size: 45px; } }
+  .game__controls {
+    width: 100%;
+    display: flex;
+    margin-top: 25px; }
+  .game__button {
+    width: 250px;
+    height: 80px;
+    background-color: #FFF;
+    border: 0;
+    border-bottom: 5px solid #c0ccdc;
+    font-size: 20px;
+    color: rgba(0, 0, 0, 0.75);
+    font-family: 'Press Start 2P', cursive;
+    margin: auto;
+    cursor: pointer;
+    animation: startButton-animation 1s infinite;
+    animation-timing-function: cubic-bezier(1, -0.1, 0, 1.1); }
+    .game__button:hover {
+      animation: initial; }
+    .game__button:disabled {
+      color: #c0ccdc;
+      cursor: wait;
+      animation: initial; }
+  .game__credits {
+    margin-top: 25px;
+    color: #bbcedf;
+    font-size: 9px;
+    font-family: 'Press Start 2P', cursive;
+    text-align: center; }
+
+@keyframes startButton-animation {
+  0% {
+    color: rgba(0, 0, 0, 0.75); }
+  100% {
+    color: #FFF; } }
