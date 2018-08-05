@@ -877,9 +877,11 @@ var game = {
   },
   gameover: function gameover() {
 
-    clearNumbers();
     audios.lose.play();
     setMessage('GAME OVER!');
+    setTimeout(function () {
+      return clearNumbers();
+    }, 1500);
   }
 };
 
