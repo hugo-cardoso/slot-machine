@@ -735,22 +735,35 @@
     return buzz;
 });
 },{}],2:[function(require,module,exports){
-"use strict";
+'use strict';
 
-var _buzz = require("buzz");
+var _buzz = require('buzz');
 
 var _buzz2 = _interopRequireDefault(_buzz);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var options = {
-  maxNumber: 7,
-  jackpot: 50
-
+var levels = {
+  eazy: {
+    maxNumber: 4,
+    jackpot: 20,
+    cost: 10
+  },
+  medium: {
+    maxNumber: 7,
+    jackpot: 40,
+    cost: 20
+  },
+  hard: {
+    maxNumber: 10,
+    jackpot: 50,
+    cost: 25
+  }
 };
 
 var state = {
-  cash: 50
+  cash: 50,
+  level: 'medium'
 };
 
 var audios = {
@@ -769,7 +782,7 @@ var gameElements = {
 };
 
 var generateNumber = function generateNumber() {
-  return Number(Math.floor(Math.random() * options.maxNumber) + 1);
+  return Number(Math.floor(Math.random() * levels[state.level].maxNumber) + 1);
 };
 
 var setNumber = function setNumber(index) {
@@ -817,7 +830,7 @@ var checkNumbers = function checkNumbers() {
 
     if (gameNumbers[0].innerHTML === gameNumbers[1].innerHTML && gameNumbers[0].innerHTML === gameNumbers[2].innerHTML) {
       setMessage('YOU WIN!');
-      state.cash += 50;
+      state.cash += levels[state.level].jackpot;
       audios.winner.play();
       resolve(true);
     } else {
@@ -845,13 +858,22 @@ var setMessage = function setMessage(msg) {
 };
 
 var updateCash = function updateCash() {
-  return gameElements.cash.innerHTML = state.cash <= 0 ? 0 : "$" + state.cash;
+  return gameElements.cash.innerHTML = state.cash <= 0 ? 0 : '$' + state.cash;
 };
 
 var getMachineCash = function getMachineCash() {
 
-  state.cash -= 10;
+  state.cash -= levels[state.level].cost;
   updateCash();
+};
+
+var changeLevel = function changeLevel(level) {
+
+  audios.play.play();
+  state.level = level;
+  document.querySelectorAll('.game__difficulty').forEach(function (button) {
+    return button.getAttribute('data-level') === level ? button.classList.add('game__difficulty--active') : button.classList.remove('game__difficulty--active');
+  });
 };
 
 var game = {
@@ -886,5 +908,11 @@ var game = {
 };
 
 gameElements.startButton.addEventListener('click', game.start);
+
+document.querySelectorAll('.game__difficulty').forEach(function (button) {
+  button.addEventListener('click', function (event) {
+    return changeLevel(event.target.getAttribute('data-level'));
+  });
+});
 
 },{"buzz":1}]},{},[2]);

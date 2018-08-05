@@ -1,13 +1,26 @@
 import buzz from 'buzz';
 
-const options = {
-  maxNumber: 7,
-  jackpot: 50,
-
-};
+const levels = {
+  eazy: {
+    maxNumber: 4,
+    jackpot: 20,
+    cost: 10
+  },
+  medium: {
+    maxNumber: 7,
+    jackpot: 40,
+    cost: 20
+  },
+  hard: {
+    maxNumber: 10,
+    jackpot: 50,
+    cost: 25
+  }
+}
 
 let state = {
-  cash: 50
+  cash: 50,
+  level: 'medium'
 };
 
 const audios = {
@@ -29,7 +42,7 @@ const gameElements = {
   cash: document.getElementById('gameCash')
 };
 
-const generateNumber = () => Number(Math.floor(Math.random() * options.maxNumber) + 1);
+const generateNumber = () => Number(Math.floor(Math.random() * levels[state.level].maxNumber) + 1);
 
 const setNumber = (index) => {
   
@@ -68,7 +81,7 @@ const checkNumbers = () => {
 
     if( gameNumbers[0].innerHTML === gameNumbers[1].innerHTML && gameNumbers[0].innerHTML === gameNumbers[2].innerHTML) {
       setMessage('YOU WIN!');
-      state.cash += 50;
+      state.cash += levels[state.level].jackpot;
       audios.winner.play();
       resolve(true);
     } else {
@@ -97,8 +110,15 @@ const updateCash = () => gameElements.cash.innerHTML = state.cash <= 0 ? 0 : `$$
 
 const getMachineCash = () => {
 
-  state.cash -= 10
+  state.cash -= levels[state.level].cost
   updateCash();
+};
+
+const changeLevel = level => {
+  
+  audios.play.play();
+  state.level = level;
+  document.querySelectorAll('.game__difficulty').forEach(button => button.getAttribute('data-level') === level ? button.classList.add('game__difficulty--active') : button.classList.remove('game__difficulty--active'));
 };
 
 const game = {
@@ -131,3 +151,8 @@ const game = {
 }
 
 gameElements.startButton.addEventListener('click', game.start);
+
+
+document.querySelectorAll('.game__difficulty').forEach(button => {
+  button.addEventListener('click', event => changeLevel(event.target.getAttribute('data-level')));
+});

@@ -50,6 +50,9 @@ table {
   border-collapse: collapse;
   border-spacing: 0; }
 
+body {
+  overflow-x: hidden; }
+
 .game {
   width: 100vw;
   height: 100vh;
@@ -163,6 +166,74 @@ table {
     color: #ecf0f1;
     font-size: 25px;
     font-family: 'Press Start 2P', cursive; }
+  .game__difficulties {
+    width: 100%;
+    height: 50px;
+    background-color: #e33c44;
+    box-sizing: border-box;
+    display: flex;
+    padding: 0 10px 10px 10px;
+    justify-content: space-between; }
+  .game__difficulty {
+    width: 100%;
+    background-color: #FFF;
+    border-bottom: 4px solid #c0ccdc;
+    font-family: 'Press Start 2P', cursive;
+    color: rgba(0, 0, 0, 0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
+    cursor: pointer; }
+    .game__difficulty:nth-child(1) {
+      border-right: 1px solid #c0ccdc; }
+    .game__difficulty:nth-child(3) {
+      border-left: 1px solid #c0ccdc; }
+    .game__difficulty--active {
+      color: #e33c44;
+      border-bottom: 0; }
+
+.instructions {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  background-color: #e33c44;
+  flex-direction: column; }
+  .instructions__content {
+    width: 600px;
+    height: 100%;
+    background-color: #262a43;
+    margin: auto;
+    padding: 15px;
+    box-sizing: border-box; }
+    @media screen and (max-width: 768px) {
+      .instructions__content {
+        width: 90%; } }
+  .instructions__title {
+    color: #FFF;
+    font-size: 17px;
+    font-family: 'Press Start 2P', cursive;
+    display: block;
+    text-align: center;
+    margin-bottom: 15px; }
+  .instructions__text {
+    color: #FFF;
+    font-family: sans-serif;
+    font-size: 15px;
+    line-height: 21px; }
+    @media screen and (max-width: 768px) {
+      .instructions__text {
+        text-align: justify; } }
+  .instructions__table {
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #373c5f;
+    color: #FFF;
+    margin-top: 25px; }
+    .instructions__table th, .instructions__table td {
+      border: 1px solid #373c5f; }
+    .instructions__table td {
+      padding: 10px; }
 
 @keyframes startButton-animation {
   0% {
