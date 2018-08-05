@@ -743,6 +743,16 @@ var _buzz2 = _interopRequireDefault(_buzz);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var options = {
+  maxNumber: 7,
+  jackpot: 50
+
+};
+
+var state = {
+  cash: 50
+};
+
 var audios = {
   play: new _buzz2.default.sound("./dist/audio/play.mp3"),
   numberStop: new _buzz2.default.sound("./dist/audio/number-stop.mp3"),
@@ -754,11 +764,12 @@ var gameNumbers = [document.getElementById('gameNumber1'), document.getElementBy
 
 var gameElements = {
   startButton: document.getElementById('startGame'),
-  messageBox: document.querySelector('.game__message')
+  messageBox: document.getElementById('gameMessage'),
+  cash: document.getElementById('gameCash')
 };
 
 var generateNumber = function generateNumber() {
-  return Number(Math.floor(Math.random() * 10) + 1);
+  return Number(Math.floor(Math.random() * options.maxNumber) + 1);
 };
 
 var setNumber = function setNumber(index) {
@@ -802,15 +813,21 @@ var clearNumbers = function clearNumbers() {
 
 var checkNumbers = function checkNumbers() {
 
-  setTimeout(function () {
+  return new Promise(function (resolve) {
+
     if (gameNumbers[0].innerHTML === gameNumbers[1].innerHTML && gameNumbers[0].innerHTML === gameNumbers[2].innerHTML) {
       setMessage('YOU WIN!');
+      state.cash += 50;
       audios.winner.play();
+      resolve(true);
     } else {
       setMessage('YOU LOSE!');
       audios.lose.play();
+      resolve(false);
     }
-  }, 250);
+
+    updateCash();
+  });
 };
 
 var lockStartButton = function lockStartButton() {
@@ -827,16 +844,42 @@ var setMessage = function setMessage(msg) {
   return gameElements.messageBox.innerHTML = msg;
 };
 
+var updateCash = function updateCash() {
+  return gameElements.cash.innerHTML = state.cash <= 0 ? 0 : "$" + state.cash;
+};
+
+var getMachineCash = function getMachineCash() {
+
+  state.cash -= 10;
+  updateCash();
+};
+
 var game = {
   start: function start() {
     setMessage('GOOD LUCK!');
+    _buzz2.default.all().stop();
     audios.play.play();
     clearNumbers();
     lockStartButton();
+    getMachineCash();
+    updateCash();
     setNumbers().then(function () {
+      return checkNumbers();
+    }).then(function (result) {
+
+      if (!result && state.cash <= 0) {
+
+        game.gameover();
+        return;
+      }
       unlockStartButton();
-      checkNumbers();
     });
+  },
+  gameover: function gameover() {
+
+    clearNumbers();
+    audios.lose.play();
+    setMessage('GAME OVER!');
   }
 };
 

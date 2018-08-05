@@ -29,6 +29,10 @@
     color: #fee861;
     font-size: 35px;
     font-family: 'Press Start 2P', cursive;
+
+    @media screen and (max-width: 768px ) {
+      font-size: 30px;
+    }
   }
   
   &__machine {
@@ -40,6 +44,10 @@
     overflow: hidden;
     padding: 25px 10px;
     box-sizing: border-box;
+
+    @media screen and (max-width: 768px ) {
+      height: 230px;
+    }
   }
   
   &__numbers {
@@ -75,15 +83,9 @@
     }
   }
   
-  &__controls {
-    width: 100%;
-    display: flex;
-    margin-top: 25px;
-  }
-  
   &__button {
-    width: 250px;
-    height: 80px;
+    width: 100%;
+    height: 100%;
     background-color: #FFF;
     border: 0;
     border-bottom: 5px solid #c0ccdc;
@@ -112,6 +114,36 @@
     font-size: 9px;
     font-family: 'Press Start 2P', cursive;
     text-align: center;
+  }
+
+  &__bottom-content {
+    width: 100%;
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+    margin-top: 25px;
+  }
+
+  &__scoreboard {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &__score-label {
+    font-size: 10px;
+    color: #ecf0f1;
+    font-family: 'Press Start 2P', cursive;
+    margin-bottom: 10px;
+  }
+
+  &__score {
+    color: #ecf0f1;
+    font-size: 25px;
+    font-family: 'Press Start 2P', cursive;
   }
 }
 

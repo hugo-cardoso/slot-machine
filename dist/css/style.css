@@ -75,6 +75,9 @@ table {
     color: #fee861;
     font-size: 35px;
     font-family: 'Press Start 2P', cursive; }
+    @media screen and (max-width: 768px) {
+      .game__message {
+        font-size: 30px; } }
   .game__machine {
     width: 100%;
     height: 300px;
@@ -84,6 +87,9 @@ table {
     overflow: hidden;
     padding: 25px 10px;
     box-sizing: border-box; }
+    @media screen and (max-width: 768px) {
+      .game__machine {
+        height: 230px; } }
   .game__numbers {
     width: 100%;
     height: 100%;
@@ -110,13 +116,9 @@ table {
     @media screen and (max-width: 768px) {
       .game__number {
         font-size: 45px; } }
-  .game__controls {
-    width: 100%;
-    display: flex;
-    margin-top: 25px; }
   .game__button {
-    width: 250px;
-    height: 80px;
+    width: 100%;
+    height: 100%;
     background-color: #FFF;
     border: 0;
     border-bottom: 5px solid #c0ccdc;
@@ -139,6 +141,28 @@ table {
     font-size: 9px;
     font-family: 'Press Start 2P', cursive;
     text-align: center; }
+  .game__bottom-content {
+    width: 100%;
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+    margin-top: 25px; }
+  .game__scoreboard {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; }
+  .game__score-label {
+    font-size: 10px;
+    color: #ecf0f1;
+    font-family: 'Press Start 2P', cursive;
+    margin-bottom: 10px; }
+  .game__score {
+    color: #ecf0f1;
+    font-size: 25px;
+    font-family: 'Press Start 2P', cursive; }
 
 @keyframes startButton-animation {
   0% {

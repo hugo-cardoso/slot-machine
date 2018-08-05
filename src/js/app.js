@@ -1,5 +1,15 @@
 import buzz from 'buzz';
 
+const options = {
+  maxNumber: 7,
+  jackpot: 50,
+
+};
+
+let state = {
+  cash: 50
+};
+
 const audios = {
   play: new buzz.sound("./dist/audio/play.mp3"),
   numberStop: new buzz.sound("./dist/audio/number-stop.mp3"),
@@ -15,12 +25,11 @@ const gameNumbers = [
 
 const gameElements = {
   startButton: document.getElementById('startGame'),
-  messageBox: document.querySelector('.game__message')
+  messageBox: document.getElementById('gameMessage'),
+  cash: document.getElementById('gameCash')
 };
 
-const generateNumber = () => {
-  return Number(Math.floor(Math.random() * 10) + 1);
-}
+const generateNumber = () => Number(Math.floor(Math.random() * options.maxNumber) + 1);
 
 const setNumber = (index) => {
   
@@ -54,16 +63,22 @@ const setNumbers = () => {
 const clearNumbers = () => gameNumbers.map(elem => elem.innerHTML = '?');
 
 const checkNumbers = () => {
-  
-  setTimeout(() => {
+
+  return new Promise(resolve => {
+
     if( gameNumbers[0].innerHTML === gameNumbers[1].innerHTML && gameNumbers[0].innerHTML === gameNumbers[2].innerHTML) {
       setMessage('YOU WIN!');
+      state.cash += 50;
       audios.winner.play();
+      resolve(true);
     } else {
       setMessage('YOU LOSE!');
       audios.lose.play();
+      resolve(false);
     }
-  }, 250);
+
+    updateCash();
+  });
 };
 
 const lockStartButton = () => {
@@ -74,20 +89,44 @@ const lockStartButton = () => {
 const unlockStartButton = () => {
   gameElements.startButton.innerHTML = 'START';
   gameElements.startButton.removeAttribute('disabled');
-}
+};
 
-const setMessage = (msg) => gameElements.messageBox.innerHTML = msg;
+const setMessage = msg => gameElements.messageBox.innerHTML = msg;
+
+const updateCash = () => gameElements.cash.innerHTML = state.cash <= 0 ? 0 : `$${ state.cash }`;
+
+const getMachineCash = () => {
+
+  state.cash -= 10
+  updateCash();
+};
 
 const game = {
   start: () => {
     setMessage('GOOD LUCK!');
+    buzz.all().stop();
     audios.play.play();
     clearNumbers();
     lockStartButton();
-    setNumbers().then(() => {
-      unlockStartButton();
-      checkNumbers();
-    });
+    getMachineCash();
+    updateCash();
+    setNumbers()
+      .then(() => checkNumbers())
+      .then(result => {
+
+        if( !result && state.cash <= 0 ) {
+
+          game.gameover();
+          return;
+        }
+        unlockStartButton();
+      })
+  },
+  gameover: () => {
+
+    clearNumbers();
+    audios.lose.play();
+    setMessage('GAME OVER!');
   }
 }
 

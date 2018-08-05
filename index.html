@@ -10,7 +10,7 @@
 <body>
     <div class="game">
         <div class="game__content">
-            <div class="game__message">GOOD LUCK!</div>    
+            <div class="game__message" id="gameMessage">GOOD LUCK!</div>
             <div class="game__machine">
                 <div class="game__numbers">
                     <div class="game__number" id="gameNumber1">?</div>
@@ -18,7 +18,17 @@
                     <div class="game__number" id="gameNumber3">?</div>
                 </div>
             </div>
-            <div class="game__controls">
+            <!-- <div class="game__scoreboard">
+                <div class="game__score">
+                    <div class="game__score-label">Cash</div>
+                    <div class="game__score-text">$50</div>
+                </div>
+            </div> -->
+            <div class="game__bottom-content">
+                <div class="game__scoreboard">
+                    <div class="game__score-label">CASH</div>
+                    <div class="game__score" id="gameCash">$50</div>
+                </div>
                 <button class="game__button" id="startGame">START</button>
             </div>
             <div class="game__credits">
