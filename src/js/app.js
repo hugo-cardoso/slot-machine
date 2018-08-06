@@ -1,20 +1,23 @@
 import buzz from 'buzz';
 
 const levels = {
-  eazy: {
+  easy: {
     maxNumber: 4,
     jackpot: 20,
-    cost: 10
+    cost: 10,
+    jackpotTwo: 3
   },
   medium: {
     maxNumber: 7,
     jackpot: 40,
-    cost: 20
+    cost: 20,
+    jackpotTwo: 6
   },
   hard: {
     maxNumber: 10,
     jackpot: 50,
-    cost: 25
+    cost: 25,
+    jackpotTwo: 12
   }
 }
 
@@ -79,17 +82,21 @@ const checkNumbers = () => {
 
   return new Promise(resolve => {
 
-    if( gameNumbers[0].innerHTML === gameNumbers[1].innerHTML && gameNumbers[0].innerHTML === gameNumbers[2].innerHTML) {
+    const numbers = gameNumbers.map(number => number.innerHTML);
+
+    if( numbers[0] === numbers[1] && numbers[0] === numbers[2]) {
+
       setMessage('YOU WIN!');
       state.cash += levels[state.level].jackpot;
       audios.winner.play();
       resolve(true);
     } else {
+
       setMessage('YOU LOSE!');
+      new Set(numbers).size !== numbers.length ? state.cash += levels[state.level].jackpotTwo : '';
       audios.lose.play();
       resolve(false);
     }
-
     updateCash();
   });
 };
@@ -108,6 +115,8 @@ const setMessage = msg => gameElements.messageBox.innerHTML = msg;
 
 const updateCash = () => gameElements.cash.innerHTML = state.cash <= 0 ? 0 : `$${ state.cash }`;
 
+const checkCash = () => state.cash >= levels[state.level].cost ? true : false;
+
 const getMachineCash = () => {
 
   state.cash -= levels[state.level].cost
@@ -124,23 +133,20 @@ const changeLevel = level => {
 const game = {
   start: () => {
     setMessage('GOOD LUCK!');
-    buzz.all().stop();
-    audios.play.play();
-    clearNumbers();
-    lockStartButton();
-    getMachineCash();
-    updateCash();
-    setNumbers()
-      .then(() => checkNumbers())
-      .then(result => {
 
-        if( !result && state.cash <= 0 ) {
-
-          game.gameover();
-          return;
-        }
-        unlockStartButton();
-      })
+    if( checkCash() ) {
+      buzz.all().stop();
+      audios.play.play();
+      clearNumbers();
+      lockStartButton();
+      getMachineCash();
+      updateCash();
+      setNumbers()
+        .then(() => checkNumbers())
+        .then(result => !result && state.cash <= 0 ? game.gameover() : unlockStartButton())
+    } else {
+      setMessage('INSUFFICIENT CASH');
+    }
   },
   gameover: () => {
 
