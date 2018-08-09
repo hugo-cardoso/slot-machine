@@ -1,5 +1,4 @@
-import React, { Component} from 'react';
-
+import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -12,39 +11,33 @@ import LevelButtons from './components/LevelButtons';
 import Message from './components/Message';
 import Scoreboard from './components/Scoreboard';
 
+import Sounds from './Sounds';
 import Options from './Options';
 
-import '../public/audio/play.mp3';
-import '../public/audio/lose.mp3';
-import '../public/audio/number-stop.mp3';
-import '../public/audio/winner.mp3';
 import './App.scss';
 
 class App extends Component{
 
   constructor(props) {
-
     super(props);
   }
 
   generateNumber() {
-
     return Number(Math.floor(Math.random() * Options.levels[this.props.level].maxNumber) + 1);
   }
 
   start() {
-
+    Sounds.play.play();
     if( this.props.cash < Options.levels[this.props.level].cost ) {
-
       this.props.messageActions.setMessage('INSUFFICIENT CASH!');
       return;
     }
-
     this.props.numbersActions.setNumbers(this.props.numbers.map(number => this.generateNumber()));
     this.props.cashActions.removeCash(Options.levels[this.props.level].cost);
   }
 
-  render(){
+  render() {
+
     return(
       <div className="App">
         <div className="game">

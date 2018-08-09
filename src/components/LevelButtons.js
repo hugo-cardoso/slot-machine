@@ -5,18 +5,17 @@ import { connect } from 'react-redux';
 
 import * as levelActions from '../actions/level';
 
-import buzz from 'buzz';
+import Sounds from '../Sounds';
 
 class LevelButtons extends Component{
 
   constructor(props) {
-
     super(props);
 	}
 	
 	setLevel( level ) {
-
     this.props.levelActions.setLevel( level );
+    Sounds.play.play();
   }
 
   render(){

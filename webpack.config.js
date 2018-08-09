@@ -15,6 +15,14 @@ module.exports = {
       {
         test: /\.css$/,
         use: [ 'style-loader', 'css-loader' ]
+      },
+      {
+        test: /\.(mp3)/,
+        exclude: /(node_modules)/,
+        loader: "file-loader",
+        options: {
+          name: "/audio/[name].[ext]"
+        }
       }
     ]
   },

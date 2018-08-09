@@ -3,13 +3,13 @@ const webpack = require("webpack");
 
 module.exports = {
   mode: "development",
-  entry: ["babel-polyfill", "./src/index.js"],
+  entry: ["./src/index.js"],
   devtool: "inline-source-map",
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        exclude: /(node_modules|bower_components)/,
+        exclude: /(node_modules)/,
         loader: "babel-loader",
         options: {
           presets: ["env", "react"],
@@ -25,6 +25,14 @@ module.exports = {
         loader: "url-loader",
         options: {
           limit: 10000
+        }
+      },
+      {
+        test: /\.(mp3)/,
+        exclude: /(node_modules)/,
+        loader: "url-loader",
+        options: {
+          name: "/audio/[name].[ext]"
         }
       },
       {

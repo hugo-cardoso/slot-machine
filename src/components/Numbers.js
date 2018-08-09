@@ -8,34 +8,30 @@ import * as messageActions from '../actions/message';
 import * as cashActions from '../actions/cash';
 
 import Options from '../Options';
+import Sounds from '../Sounds';
 
 class Numbers extends Component{
 
   constructor(props) {
-
     super(props);
-  }
-
-  generateNumber() {
-
-    return Number(Math.floor(Math.random() * this.levels[this.state.level].maxNumber) + 1);
   }
 
   checkNumbers( numbers ) {
 
-    const resultFiltered = new Set(numbers);
-
-    switch ( resultFiltered.size ) {
+    switch ( new Set(numbers).size ) {
 
       case 3:
         this.props.messageActions.setMessage('YOU LOSE!');
+        Sounds.lose.play();
         break;
       case 2:
         this.props.messageActions.setMessage('ALMOST!');
+        Sounds.lose.play();
         this.props.cashActions.addCash( Options.levels[this.props.level].jackpotTwo );
         break;
       case 1:
         this.props.messageActions.setMessage('YOU WIN!');
+        Sounds.winner.play();
         this.props.cashActions.addCash( Options.levels[this.props.level].jackpot );
         break;
     }
