@@ -39,7 +39,7 @@ class Numbers extends Component{
 
   componentWillReceiveProps(props) {
     if(props.numbers != this.props.numbers ) {
-      this.checkNumbers(props.numbers);
+      this.checkNumbers(props.numbers);     
     }
   }
 

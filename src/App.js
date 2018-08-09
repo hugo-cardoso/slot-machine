@@ -26,14 +26,37 @@ class App extends Component{
     return Number(Math.floor(Math.random() * Options.levels[this.props.level].maxNumber) + 1);
   }
 
+  isGameOver( cash ) {
+
+    let isPlayable = [];
+    Object.keys(Options.levels).forEach(key => {
+      Options.levels[key].cost > cash ? isPlayable.push(false) : isPlayable.push(true);  
+    });
+    
+    return isPlayable.includes(true) ? false : true;
+  }
+
   start() {
+
     Sounds.play.play();
+
+    if( this.isGameOver(this.props.cash) ) {
+      window.location.reload();
+      return;
+    }
+
     if( this.props.cash < Options.levels[this.props.level].cost ) {
       this.props.messageActions.setMessage('INSUFFICIENT CASH!');
       return;
     }
     this.props.numbersActions.setNumbers(this.props.numbers.map(number => this.generateNumber()));
     this.props.cashActions.removeCash(Options.levels[this.props.level].cost);
+  }
+
+  componentWillReceiveProps(props) {
+    if(props.cash != this.props.cash && this.isGameOver(props.cash)) {
+      setTimeout(() => this.props.messageActions.setMessage('GAME OVER!'),1000);
+    }
   }
 
   render() {
@@ -49,7 +72,9 @@ class App extends Component{
             <LevelButtons />
             <div className="game__bottom-content">
               <Scoreboard />
-              <button className="game__button" onClick={() => this.start() }>START</button>
+              <button className="game__button" onClick={() => this.start() }>
+                { this.isGameOver(this.props.cash) ? 'RESTART' : 'START' }
+              </button>
             </div>
             <div className="game__credits">
               Developed by HUGO CARDOSO
